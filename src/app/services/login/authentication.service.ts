@@ -29,7 +29,7 @@ export class AuthenticationService {
   }
 
   getUsers(): Observable<HttpResponse<any>> {
-    const users = `${environment.apiEndPoint}/users`;
+    const users = `${environment.apiEndPoint}users/`;
     return this._httpService.request('get', users);
   }
 }
