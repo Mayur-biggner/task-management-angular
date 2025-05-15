@@ -13,4 +13,5 @@ export const routes: Routes = [
     canActivate: [AuthGuardFn],
     loadChildren: () => import('./view/task/task.routes').then((m) => m.routes),
   },
+  { path: '**', redirectTo: '' },
 ];
