@@ -3,7 +3,7 @@ import { prodEnvironment } from './environment.prod';
 
 export const devEnvironment = {
   production: false,
-  apiEndPoint: 'http://localhost:3000/api/',
+  apiEndPoint: 'https://task-management-eight-bay.vercel.app/api/',
   pageSize: 10,
   appVersion: '1.0.0',
 };
