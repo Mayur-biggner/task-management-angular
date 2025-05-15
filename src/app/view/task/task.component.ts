@@ -3,7 +3,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { ADTSettings } from 'angular-datatables/src/models/settings';
-import { Config } from 'datatables.net';
+import DataTables, { Config } from 'datatables.net';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { TaskService } from '../../services/task/task.service';
@@ -52,6 +52,7 @@ export class TaskComponent implements OnInit, AfterViewInit {
   dtTrigger: Subject<ADTSettings> = new Subject<ADTSettings>();
   tasks: Task[] = [];
   deletePermission: boolean = false;
+  assigneeData: Array<{ value: string; label: string }> | [] = [];
   constructor(
     public dialog: MatDialog,
     private _taskService: TaskService,
@@ -61,6 +62,16 @@ export class TaskComponent implements OnInit, AfterViewInit {
     private _authService: AuthenticationService,
     private _router: Router
   ) {
+    _authService.getUsers().subscribe({
+      next: (response: any) => {
+        // console.log(response);
+        this.assigneeData = response.users.map((user: any) => ({
+          value: user._id,
+          label: user.username,
+        }));
+        // console.log(this.assigneeData);
+      },
+    });
     const role = _localStorageService.getRole();
     console.log('role', role);
     if (role) {
@@ -73,7 +84,13 @@ export class TaskComponent implements OnInit, AfterViewInit {
       pagingType: 'full_numbers',
       serverSide: true, // Set the flag
       ajax: (dataTablesParameters: any, callback) => {
-        this._taskService.getAllTasks(dataTablesParameters).subscribe({
+        const filters = {
+          status: $('#filterStatus').val(),
+          priority: $('#filterPriority').val(),
+          assignee: $('#filterAssignee').val(),
+        };
+        console.log('filters', filters);
+        this._taskService.getAllTasks(filters).subscribe({
           next: (response) => {
             console.log('response', response);
             this.tasks = response.tasks;
@@ -127,6 +144,11 @@ export class TaskComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dtTrigger.next(this.dtOptions); // if you're using dtTrigger
+    $('#filterStatus, #filterPriority, #filterAssignee').on('change', () => {
+      this.dtElement.dtInstance.then((dtInstance: any) => {
+        dtInstance.ajax.reload(); // safely reloads the DataTable
+      });
+    });
 
     if (!this.deletePermission) {
       setTimeout(() => {

@@ -10,4 +10,32 @@
 <!-- <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
 </table> -->
 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+    <tfoot>
+        <tr>
+            <th>
+                <select id="filterStatus" class="form-control">
+                    <option value="">All Status</option>
+                    <option value="to-do">To-Do</option>
+                    <option value="in-progress">In-Progress</option>
+                    <option value="done">Done</option>
+                </select>
+            </th>
+            <th>
+                 <select id="filterPriority" class="form-control">
+                    <option value="">All Priority</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </th>
+            <th>
+                <select id="filterAssignee" class="form-control">
+                    <option value="">All Assignees</option>
+                    @for (item of assigneeData; track $index) {
+                    <option value={{item.value}}>{{item.label}}</option>
+                    }
+                </select>
+            </th>
+        </tr>
+    </tfoot>
 </table>
