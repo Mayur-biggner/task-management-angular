@@ -1,0 +1,63 @@
+<h1 mat-dialog-title>{{dailogTitle}}</h1>
+
+<mat-dialog-content>
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
+      <mat-form-field appearance="fill" style="width: 100%; margin-left: 8px;">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" rows="3"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
+      <div>
+        <mat-form-field appearance="fill" style="width: 45%; margin-right:5%;">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status" required>
+            <mat-option value="to-do">To Do</mat-option>
+            <mat-option value="in-progress">In Progress</mat-option>
+            <mat-option value="done">Done</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" style="width: 45%;">
+          <mat-label>Priority</mat-label>
+          <mat-select formControlName="priority" required>
+            <mat-option value="low">Low</mat-option>
+            <mat-option value="medium">Medium</mat-option>
+            <mat-option value="high">High</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="fill" style="width: 45%; margin-right: 5%;">
+          <mat-label>Assignee</mat-label>
+          <mat-select formControlName="assignee">
+            @for (item of assigneeData; track $index){
+            <mat-option value={{item.value}}>{{item.label}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <input type="date" formControlName="dueDate">
+      </div>
+    </div>
+    <!-- 
+    <div style="margin-bottom: 24px;">
+      <label style="display: block; margin-bottom: 8px;">Image:</label>
+      <input type="file" (change)="onFileChange($event)" />
+    </div> -->
+
+    <mat-dialog-actions align="end" style="display: flex; justify-content: flex-end; gap: 12px;">
+      <button mat-button type="button" (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="taskForm.invalid">
+        Submit
+      </button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

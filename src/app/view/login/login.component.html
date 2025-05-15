@@ -1,0 +1,18 @@
+<div class="login-container" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()"
+        style="min-width: 300px; display: flex; flex-direction: column; gap: 1rem;">
+        <h2>Task Managment</h2>
+
+        <mat-form-field appearance="outline">
+            <!-- <mat-label>Email</mat-label> -->
+            <input matInput formControlName="email" type="email" required placeholder="Username or email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <!-- <mat-label>Password</mat-label> -->
+            <input matInput formControlName="password" type="password" required placeholder="Password" />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+    </form>
+</div>

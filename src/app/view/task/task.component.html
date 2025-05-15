@@ -1,0 +1,13 @@
+<div>
+    <div style="background-color: grey; width: 100%;">
+        <button mat-stroked-button style="background-color: blueviolet; color: white; float: right;"
+            (click)="onLogout()">Logout</button>
+    </div>
+</div>
+<button mat-stroked-button style="background-color: blueviolet; color: white; float: right; margin: 1rem;"
+    (click)="onAddTask()">Add
+    Task</button>
+<!-- <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+</table> -->
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+</table>
